@@ -2,6 +2,7 @@
 
 # shellcheck disable=SC2001
 # shellcheck disable=SC2088
+# shellcheck disable=SC2162
 
 function chd() {
 
@@ -36,19 +37,36 @@ function chd() {
 
         [[ "${item:0:1}" == "~" ]] && item="$HOME${item:1}"
 
-        if [[ -d "${item}" && ! -f "${item}" ]]; then
+        [[ -d "${item}" && ! -f "${item}" ]] && {
             cd "$item" || { echo "[ERROR] couldn't enter $item"; }
-        elif [[ -f "${item}" && ! -d "${item}" ]]; then
+            continue
+        }
+        [[ -f "${item}" && ! -d "${item}" ]] && {
             openfile "${item}"
-        fi
+            continue
+        }
 
         case "${item}" in
             'ADD ALIAS')
-                
+                printf "Enter alias name: "
+                read aliasName
+                printf "Enter command: "
+                read cmd
+                echo "alias $aliasName='$cmd'" >> "$HOME/Own_Repos/custom-console/util/chd.aliases"
+                exit 0
             ;;
+
             'SHOW ALIASES')
-                echo "item = 2 or item = 3"
+                if [ -s "$HOME/Own_Repos/custom-console/util/chd.aliases" ]; then
+                    cat "$HOME/Own_Repos/custom-console/util/chd.aliases"
+                else
+                    echo "[INFO] No aliases created."
+                fi
+                echo
+                echo
+                exit 0
             ;;
+
             *)
                 echo "[ERROR] Unhandled item :- ${item}"
                 exit 1
