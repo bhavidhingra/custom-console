@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC2001
+# shellcheck disable=SC2088
+
+function chd() {
+
+    if [[ $# -gt 0 ]]; then
+        cd "$*" || { echo "[Error] couldn't enter $*"; }
+        return
+    fi
+
+    while true; do
+        printf "$(tput bold)%s" "$PWD$(tput sgr0)"
+
+        dirContent=$(ls -t)
+        itemList=(
+            '..'
+            '<-->'
+            "${dirContent[@]}"
+            '-'
+            '~/'
+            'ADD ALIAS'
+            'SHOW ALIASES'
+        )
+
+        item="$(printf "%s\n" "${itemList[@]}" | fzf --color 'fg:27')"
+        [[ -z "${item}" ]] && break
+
+        [[ "${item}" == "-" ]] && {
+            cd - &> /dev/null || { echo "[ERROR] couldn't go back to the previous directory"; }
+            continue
+        }
+
+        [[ "${item}" == "<-->" ]] && item="$(dirs -p | fzf --color 'fg:27')"
+
+        [[ "${item:0:1}" == "~" ]] && item="$HOME${item:1}"
+
+        if [[ -d "${item}" && ! -f "${item}" ]]; then
+            cd "$item" || { echo "[ERROR] couldn't enter $item"; }
+        elif [[ -f "${item}" && ! -d "${item}" ]]; then
+            openfile "${item}"
+        fi
+
+        case "${item}" in
+            'ADD ALIAS')
+                
+            ;;
+            'SHOW ALIASES')
+                echo "item = 2 or item = 3"
+            ;;
+            *)
+                echo "[ERROR] Unhandled item :- ${item}"
+                exit 1
+            ;;
+        esac
+
+    done
+}
+
+

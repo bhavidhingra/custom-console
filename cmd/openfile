@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+function main() {
+
+    archi=$(uname -sm)
+    if [[ "$archi" =~ Darwin ]]; then
+        open "$*"
+    else
+        xdg-open "$*"
+    fi
+}
+
+main "$*"
