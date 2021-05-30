@@ -3,6 +3,13 @@
 # shellcheck disable=SC2001
 # shellcheck disable=SC2088
 # shellcheck disable=SC2162
+# shellcheck disable=SC1091
+# shellcheck disable=SC1090
+
+source __gen_dir_alias
+source __print_chd_aliases
+source __println_as
+source __add_chd_alias
 
 function chd() {
 
@@ -12,68 +19,68 @@ function chd() {
     fi
 
     while true; do
-        printf "$(tput bold)%s" "$PWD$(tput sgr0)"
+        printf "$(tput bold)$(tput rev)%s" "PWD: ${PWD}$(tput sgr0)"
+
+        itemList=()
+        [[ "${PWD}" != "/" ]] && itemList+=('..')
+        itemList+=('<-->')
 
         dirContent=$(ls -t)
-        itemList=(
-            '..'
-            '<-->'
-            "${dirContent[@]}"
+        [[ ${#dirContent[@]} -gt 0 ]] && itemList+=("${dirContent[@]}")
+        # for f in "${dirContent[@]}"; do
+        #     echo "${f}"
+        #     itemList+=("${dirContent[@]}")
+        # done
+
+        itemList+=(
             '-'
             '~/'
             'ADD ALIAS'
             'SHOW ALIASES'
+            'EDIT ALIASES'
         )
 
         item="$(printf "%s\n" "${itemList[@]}" | fzf --color 'fg:27')"
-        [[ -z "${item}" ]] && break
-
-        [[ "${item}" == "-" ]] && {
-            cd - &> /dev/null || { echo "[ERROR] couldn't go back to the previous directory"; }
-            continue
-        }
-
         [[ "${item}" == "<-->" ]] && item="$(dirs -p | fzf --color 'fg:27')"
+
+        [[ -z "${item}" ]] && break
 
         [[ "${item:0:1}" == "~" ]] && item="$HOME${item:1}"
 
-        [[ -d "${item}" && ! -f "${item}" ]] && {
-            cd "$item" || { echo "[ERROR] couldn't enter $item"; }
-            continue
-        }
-        [[ -f "${item}" && ! -d "${item}" ]] && {
-            openfile "${item}"
-            continue
-        }
-
         case "${item}" in
+            '-')
+                cd - &> /dev/null || { echo "[ERROR] couldn't go back to the previous directory"; }
+            ;;
             'ADD ALIAS')
-                printf "Enter alias name: "
-                read aliasName
-                printf "Enter command: "
-                read cmd
-                echo "alias $aliasName='$cmd'" >> "$HOME/Own_Repos/custom-console/util/chd.aliases"
-                exit 0
+                __add_chd_alias
+                echo
             ;;
 
             'SHOW ALIASES')
-                if [ -s "$HOME/Own_Repos/custom-console/util/chd.aliases" ]; then
-                    cat "$HOME/Own_Repos/custom-console/util/chd.aliases"
-                else
-                    echo "[INFO] No aliases created."
-                fi
-                echo
-                echo
-                exit 0
+                __print_chd_aliases
+                return 0
+            ;;
+
+            'EDIT ALIASES')
+                openfile "$__CHD_ALIASES_FILE"
             ;;
 
             *)
+                [[ -d "${item}" && ! -f "${item}" ]] && {
+                    cd "$item" || { echo "[ERROR] couldn't enter $item"; }
+                    continue
+                }
+                [[ -f "${item}" && ! -d "${item}" ]] && {
+                    openfile "${item}"
+                    continue
+                }
                 echo "[ERROR] Unhandled item :- ${item}"
-                exit 1
+                return 1
             ;;
         esac
-
     done
+
+    return 0
 }
 
 

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+#shellcheck disable=SC1091
+
+source __apply_tput
+
+# Usage: __println_as "bold" "red" "Your Text"
+function __println_as() {
+
+    while [[ $# -gt 1 ]]; do
+        __apply_tput "$1"
+        shift
+    done
+
+    msg="$1"
+    printf "%s\n" "$msg"
+
+    tput sgr 0
+}

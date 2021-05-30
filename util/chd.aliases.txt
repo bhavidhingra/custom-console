@@ -1,0 +1,21 @@
+# IMPORTANT:
+# 1) THIS FILE IS ONLY MEANT TO STORE ALIASES CREATED THROUGH CHD
+# 
+# 2) NEW ALIASES GET APPENDED AFTER THE LAST CHARACTER OF THIS FILE
+#    HENCE, THE LAST LINE OF THIS FILE SHOULD BE A BLANK LINE
+
+alias checkout-services-apis='cd /Users/bhavi.dhingra1/SF_Repos/checkout-services-apis'
+alias spring-cloud-gateway='cd /Users/bhavi.dhingra1/custom-git/spring-cloud-gateway'
+alias custom-git-bash='cd /Users/bhavi.dhingra1/custom-git/custom-git-bash'
+alias custom-git.github.io='cd /Users/bhavi.dhingra1/custom-git/custom-git.github.io'
+alias ods='cd /Users/bhavi.dhingra1/SF_Repos/ods'
+alias base-oms='cd /Users/bhavi.dhingra1/SF_Repos/base-oms'
+alias custom-console='cd /Users/bhavi.dhingra1/Own_Repos/custom-console'
+alias nodepptdir='cd /Users/bhavi.dhingra1/Own_Repos/nodeppt'
+alias desktop='cd /Users/bhavi.dhingra1/Desktop'
+alias downloads='cd /Users/bhavi.dhingra1/Downloads'
+alias ownrepos='cd /Users/bhavi.dhingra1/Own_Repos'
+alias sfrepos='cd /Users/bhavi.dhingra1/SF_Repos'
+alias ownprojects='cd /Users/bhavi.dhingra1/OwnProjects'
+alias screenrecordings='cd /Users/bhavi.dhingra1/ScreenRecordings'
+alias dropbox='cd /Users/bhavi.dhingra1/Public/Drop\ Box'

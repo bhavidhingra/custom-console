@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+#shellcheck disable=SC1091
+
+source __gen_dir_alias
+source __println_as
+source __print_chd_aliases
+
+function __add_chd_alias() {
+
+    dir="$PWD"
+    aliasName=$(__gen_dir_alias "$dir")
+    printf "Suggested alias name: "
+    __println_as bold blue "$aliasName"
+    printf "Press enter to use it or input a new alias name: "
+    read -r inputAliasName
+    if [[ -n "${inputAliasName}" ]]; then
+        aliasName=$inputAliasName
+    fi
+
+    dir=${dir// /\\ }   # escape spaces with a backslash
+    stmt="alias $aliasName='cd $dir'"
+    __println_as bold blue "$stmt"
+    printf "add alias? (press enter / n) : "
+    read -r
+    if [[ -z "$REPLY" ]]; then
+        printf "%s\n" "$stmt" >> "$__CHD_ALIASES_FILE"
+        __print_chd_aliases
+        #shellcheck source=chd.aliases.txt
+        source "$__CHD_ALIASES_FILE"
+    fi
+}

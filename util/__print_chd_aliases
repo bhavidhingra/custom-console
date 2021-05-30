@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+# shellcheck disable=SC2086
+
+source __print_color_banner
+source __print_as
+
+function __print_chd_aliases() {
+
+    echo
+
+    numAliases=$(grep "^alias " "$__CHD_ALIASES_FILE" | grep "=" -c)
+    if [[ $numAliases -gt 0 ]]; then
+        __print_color_banner "CHD ALIASES" "blue" "#"
+        grep alias "$__CHD_ALIASES_FILE" | grep "="
+    else
+        __print_as blue "[INFO] No aliases created using 'chd'"
+    fi
+
+    echo
+}
