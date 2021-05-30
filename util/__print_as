@@ -2,10 +2,11 @@
 
 #shellcheck disable=SC1091
 
-source __apply_tput
 
-# Usage: __print_as "bold" "red" "Your Text"
+# Usage: __print_as bold red "Your Text"
 function __print_as() {
+
+    source __apply_tput
 
     while [[ $# -gt 1 ]]; do
         __apply_tput "$1"

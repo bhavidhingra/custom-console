@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+#shellcheck disable=SC1091
+#shellcheck disable=SC2155
+
+# Usage : __split_url_encoded_str str substr
+# str : url encoded input string
+# substr : url encoded delimiter substring
+function __split_url_encoded_str() {
+
+    local str="$1"
+    local subStr="$2"
+    str+=$subStr
+
+    RESULT_ARR=()
+    local remainingStr="$str"
+    while [[ -n "$remainingStr" ]]; do
+        local suffix=${remainingStr#*$subStr}
+        local prefix=${remainingStr%$subStr$suffix}
+        RESULT_ARR+=("$prefix")
+        remainingStr="$suffix"
+    done
+}

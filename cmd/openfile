@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
+#shellcheck disable=SC1091
+
 function main() {
 
-    archi=$(uname -sm)
-    if [[ "$archi" =~ Darwin ]]; then
+    source __is_mac_os
+
+    if [[ $(__is_mac_os) == true ]]; then
         open "$*"
     else
         xdg-open "$*"

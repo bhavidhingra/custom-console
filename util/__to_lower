@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+#shellcheck disable=SC2005
+
+function __to_lower() {
+
+    local itemStr="$*"
+    echo "$(echo "${itemStr}" | tr '[:upper:]' '[:lower:]')"
+}

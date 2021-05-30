@@ -3,10 +3,10 @@
 # shellcheck disable=SC1091
 # shellcheck disable=SC2086
 
-source __print_color_banner
-source __print_as
-
 function __print_chd_aliases() {
+
+    source __print_color_banner
+    source __print_as
 
     echo
 

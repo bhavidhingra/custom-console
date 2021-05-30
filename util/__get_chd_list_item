@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+#shellcheck disable=SC2155
+
+function __get_chd_list_item() {
+    local item="$*"
+    local last_modified_time="$(__get_last_modified_time "${item}")"
+    echo "${last_modified_time}    ${item}"
+}

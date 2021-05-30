@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+function __remove_spaces() {
+
+    local itemStr="$*"
+    itemStr=${itemStr// /}  # remove spaces
+    echo "$itemStr"
+}

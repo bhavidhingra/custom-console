@@ -1,18 +1,22 @@
 #!/usr/bin/env bash
 
 #shellcheck disable=SC1091
-
-source __gen_dir_alias
-source __println_as
-source __print_chd_aliases
+#shellcheck disable=SC2155
 
 function __add_chd_alias() {
 
-    dir="$PWD"
-    aliasName=$(__gen_dir_alias "$dir")
+    source __gen_dir_alias
+    source __println_as
+    source __print_chd_aliases
+
+    local dir="$PWD"
+    local aliasName=$(__gen_dir_alias "$dir")
+    local inputAliasName=""
+    local stmt=""
+
     printf "Suggested alias name: "
     __println_as bold blue "$aliasName"
-    printf "Press enter to use it or input a new alias name: "
+    printf "Enter Alias Name (press <enter> to use the suggested): "
     read -r inputAliasName
     if [[ -n "${inputAliasName}" ]]; then
         aliasName=$inputAliasName

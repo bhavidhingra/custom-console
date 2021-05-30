@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+function __is_mac_os() {
+
+    archi=$(uname -sm)
+    if [[ "$archi" =~ Darwin ]]; then
+        echo true
+    else
+        echo false
+    fi
+}

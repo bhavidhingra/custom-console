@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+#shellcheck disable=SC1091
+#shellcheck disable=SC2005
+#shellcheck disable=SC2088
+
+
+function __get_last_modified_time() {
+
+    source __is_mac_os
+    source __escape_spaces
+
+    item="$*"
+    [[ "${item}" == "~/" ]] && item="$HOME"
+    # item="$(__escape_spaces "${item}")"
+    if [[ $(__is_mac_os) == true ]]; then
+        echo "$(stat -f %Sm "$item")"
+    else
+        dateStr="$(stat -c %y "$item")"
+        echo "$(date -d "$dateStr" "+%b %d %H:%M:%S %Y")"   # %b : Month as Jan - Dec
+                                                            # %d : Day as 1 - 31
+                                                            # %H : Hour as 00 - 23
+                                                            # %M : Minute as 00 - 59
+                                                            # %S : Second as 00 - 59
+                                                            # %Y : Year as 2021
+    fi
+}

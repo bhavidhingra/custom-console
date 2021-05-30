@@ -1,15 +1,12 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC2001
-# shellcheck disable=SC2088
-# shellcheck disable=SC2162
-# shellcheck disable=SC1091
-# shellcheck disable=SC1090
-
-source __gen_dir_alias
-source __print_chd_aliases
-source __println_as
-source __add_chd_alias
+#shellcheck disable=SC2001
+#shellcheck disable=SC2088
+#shellcheck disable=SC2162
+#shellcheck disable=SC1091
+#shellcheck disable=SC1090
+#shellcheck disable=SC2155
+#shellcheck disable=SC2207
 
 function chd() {
 
@@ -18,19 +15,38 @@ function chd() {
         return
     fi
 
-    while true; do
-        printf "$(tput bold)$(tput rev)%s" "PWD: ${PWD}$(tput sgr0)"
+    local RESULT_ARR=()
 
-        itemList=()
+    source __gen_dir_alias
+    source __print_chd_aliases
+    source __print_as
+    source __add_chd_alias
+    source __get_last_modified_time
+    source __get_chd_list_item
+    source __url_encode
+    source __url_decode
+    source __split_url_encoded_str
+    source __escape_spaces
+
+    while true; do
+
+        local itemList=()
         [[ "${PWD}" != "/" ]] && itemList+=('..')
         itemList+=('<-->')
 
-        dirContent=$(ls -t)
-        [[ ${#dirContent[@]} -gt 0 ]] && itemList+=("${dirContent[@]}")
-        # for f in "${dirContent[@]}"; do
-        #     echo "${f}"
-        #     itemList+=("${dirContent[@]}")
-        # done
+        local lsEncodedStr="$(__url_encode "$(ls -t -1)")"
+        __split_url_encoded_str "$lsEncodedStr" "%0A" "lsEncodedArr"
+        local lsEncodedArr=("${RESULT_ARR[@]}")
+        local lsItem=""
+        local item=""
+        local lsArr=()
+
+        for lsItem in "${lsEncodedArr[@]}"; do
+            lsItem="$(__url_decode "${lsItem}")"
+            lsArr+=("${lsItem}")
+            item="$(__get_chd_list_item "${lsItem}")"
+            itemList+=("${item}")
+        done
 
         itemList+=(
             '-'
@@ -40,10 +56,15 @@ function chd() {
             'EDIT ALIASES'
         )
 
+        __print_as bold rev "PWD: ${PWD}"
         item="$(printf "%s\n" "${itemList[@]}" | fzf --color 'fg:27')"
-        [[ "${item}" == "<-->" ]] && item="$(dirs -p | fzf --color 'fg:27')"
-
         [[ -z "${item}" ]] && break
+
+        [[ "${item}" == "<-->" ]] && {
+            __print_as bold rev "Director Stack"
+            item="$(dirs -p | fzf --color 'fg:27')"
+            [[ -z "${item}" ]] && continue
+        }
 
         [[ "${item:0:1}" == "~" ]] && item="$HOME${item:1}"
 
@@ -66,6 +87,14 @@ function chd() {
             ;;
 
             *)
+                for lsItem in "${lsArr[@]}"; do
+                    local it="$(__get_chd_list_item "${lsItem}")"
+                    if [[ "${it}" == "${item}" ]]; then
+                        item=${lsItem}
+                        break
+                    fi
+                done
+
                 [[ -d "${item}" && ! -f "${item}" ]] && {
                     cd "$item" || { echo "[ERROR] couldn't enter $item"; }
                     continue

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+function __escape_spaces() {
+
+    local itemStr="$*"
+    itemStr=${itemStr// /\\ }   # escape spaces with a backslash
+    echo "$itemStr"
+}

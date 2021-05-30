@@ -1,22 +1,30 @@
-#!/usr/bin/env bash
+#!/bin/bash -i
+# -i : alias command required interactive more to work on ubuntu
+
+#shellcheck disable=SC2155
+#shellcheck disable=SC1091
 
 # Usage: __gen_dir_alias "$directoryPath"
 function __gen_dir_alias() {
-    dir="$*"
+
+    source __to_lower
+    source __remove_spaces
+
+    local dir="$*"
     [[ "$dir" == "/" ]] && echo "/" && return
 
-    aliasesStr=$(alias | cut -d "=" -f 1)
-    aliasArr=()
+    local aliasesStr=$(alias | cut -d "=" -f 1)
+    local aliasArr=()
+    local line=""
+
     while read -r line; do
         line=${line/#alias /}
         aliasArr+=("$line")
     done <<< "$aliasesStr"
 
-    aliasExists=true
-    tempAliasName="$(basename "${dir}")"
-    tempAliasName=$(echo "${tempAliasName}" | tr '[:upper:]' '[:lower:]')    # to lower
-    tempAliasName=${tempAliasName// /}  # remove spaces
-    aliasName="${tempAliasName}"
+    local aliasExists=true
+    local tempAliasName="$(__remove_spaces "$(__to_lower "$(basename "${dir}")")")"
+    local aliasName="${tempAliasName}"
 
     i=0
     while true; do

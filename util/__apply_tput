@@ -20,9 +20,7 @@ function __apply_tput() {
         ;;
         white) tput setaf 7
         ;;
-        bold) tput bold
-        ;;
-        *)
+        *) tput ${1}
         ;;
     esac
 }
