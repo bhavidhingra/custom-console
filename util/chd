@@ -34,7 +34,7 @@ function chd() {
         [[ "${PWD}" != "/" ]] && itemList+=('..')
         itemList+=('<-->')
 
-        local lsEncodedStr="$(__url_encode "$(ls -t -1)")"
+        local lsEncodedStr="$(__url_encode "$(ls -pt -1)")"
         __split_url_encoded_str "$lsEncodedStr" "%0A" "lsEncodedArr"
         local lsEncodedArr=("${RESULT_ARR[@]}")
         local lsItem=""
@@ -57,12 +57,12 @@ function chd() {
         )
 
         __print_as bold rev "PWD: ${PWD}"
-        item="$(printf "%s\n" "${itemList[@]}" | fzf --color 'fg:27')"
+        item="$(printf "%s\n" "${itemList[@]}" | fzf --color 'fg:27' --preview 'ls -pt -1 {}')"
         [[ -z "${item}" ]] && break
 
         [[ "${item}" == "<-->" ]] && {
             __print_as bold rev "Director Stack"
-            item="$(dirs -p | fzf --color 'fg:27')"
+            item="$(dirs -pl | fzf --color 'fg:27' --preview 'ls -pt -1 {}')"
             [[ -z "${item}" ]] && continue
         }
 
