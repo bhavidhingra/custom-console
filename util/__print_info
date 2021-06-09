@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+#shellcheck disable=SC1091
+
+function __print_info() {
+
+    source __println_as
+
+    __println_as blue "[INFO] $*"
+}

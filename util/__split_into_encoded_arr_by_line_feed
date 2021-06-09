@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+#shellcheck disable=SC2155
+#shellcheck disable=SC1091
+
+# Usage: __split_into_encoded_arr_by_line_feed "${input_str}"
+# Output: RESULT_ARR
+function __split_into_encoded_arr_by_line_feed() {
+
+    source __url_encode
+    source __split_str
+
+    local str="${1}"
+    local encodedStr="$(__url_encode "${str}")"
+    __split_str "${encodedStr}" "%0A"   # "%0A" is the encoded string for line feed
+}

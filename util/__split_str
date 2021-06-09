@@ -3,10 +3,11 @@
 #shellcheck disable=SC1091
 #shellcheck disable=SC2155
 
-# Usage : __split_url_encoded_str str substr
-# str : url encoded input string
-# substr : url encoded delimiter substring
-function __split_url_encoded_str() {
+# Usage : __split_str str substr
+# str : input string
+# substr : delimiter substring
+# Output: RESULT_ARR
+function __split_str() {
 
     local str="$1"
     local subStr="$2"

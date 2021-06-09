@@ -20,7 +20,7 @@ function __apply_tput() {
         ;;
         white) tput setaf 7
         ;;
-        *) tput ${1}
+        *) tput "${1}"
         ;;
     esac
 }
