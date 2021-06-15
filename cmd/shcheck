@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+function main() {
+    file="$(fzf)"
+    if [[ -f "${file}" ]]; then
+        shellcheck "${file}"
+    fi
+}
+
+main
