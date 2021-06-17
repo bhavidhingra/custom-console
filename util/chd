@@ -11,7 +11,7 @@
 function chd() {
 
     if [[ $# -gt 0 ]]; then
-        cd "$*" || { echo "[Error] couldn't enter $*"; }
+        cd "$*" || { echo "[Error] couldn't enter \"$*\""; }
         return
     fi
 
@@ -23,19 +23,19 @@ function chd() {
     source __add_chd_alias
     source __get_last_modified_time
     source __get_chd_list_item
-    source __url_encode
-    source __url_decode
-    source __split_url_encoded_str
+    source "$CUSTOM_CONSOLE_UTIL"/__url_encode
+    source "$CUSTOM_CONSOLE_UTIL"/__url_decode
+    source "$CUSTOM_CONSOLE_UTIL"/__split_str
     source __escape_spaces
 
     while true; do
 
         local itemList=()
         [[ "${PWD}" != "/" ]] && itemList+=('..')
-        itemList+=('<-->')
+        itemList+=('<<-->>')
 
         local lsEncodedStr="$(__url_encode "$(ls -pt -1)")"
-        __split_url_encoded_str "$lsEncodedStr" "%0A" "lsEncodedArr"
+        __split_str "$lsEncodedStr" "%0A"   # "%0A" is the encoded string for line feed
         local lsEncodedArr=("${RESULT_ARR[@]}")
         local lsItem=""
         local item=""
@@ -57,12 +57,12 @@ function chd() {
         )
 
         __print_as bold rev "PWD: ${PWD}"
-        item="$(printf "%s\n" "${itemList[@]}" | fzf --color 'fg:27' --preview 'ls -pt -1 {}')"
+        item="$(printf "%s\n" "${itemList[@]}" | fzf --color 'fg:27' --preview 'tree -L 2 {}')"
         [[ -z "${item}" ]] && break
 
-        [[ "${item}" == "<-->" ]] && {
-            __print_as bold rev "Director Stack"
-            item="$(dirs -pl | fzf --color 'fg:27' --preview 'ls -pt -1 {}')"
+        [[ "${item}" == "<<-->>" ]] && {
+            __print_as bold rev "Frequently Visited Directories"
+            item="$(z -l | sed -e 's/^[0-9 ]*//' | fzf --color 'fg:27' --preview 'tree -L 2 {}')"
             [[ -z "${item}" ]] && continue
         }
 

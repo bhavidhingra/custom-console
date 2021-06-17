@@ -4,7 +4,7 @@
 
 function __print_err() {
 
-    source __println_as
+    source "$CUSTOM_CONSOLE_UTIL"/__println_as
 
     __println_as red "[ERROR] $*"
 }

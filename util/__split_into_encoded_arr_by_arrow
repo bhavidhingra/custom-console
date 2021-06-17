@@ -7,8 +7,8 @@
 # Output: RESULT_ARR
 function __split_into_encoded_arr_by_arrow() {
 
-    source __url_encode
-    source __split_str
+    source "$CUSTOM_CONSOLE_UTIL"/__url_encode
+    source "$CUSTOM_CONSOLE_UTIL"/__split_str
 
     local str="${1}"
     local encodedStr="$(__url_encode "${str}")"
