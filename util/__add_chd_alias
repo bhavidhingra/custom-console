@@ -6,7 +6,7 @@
 function __add_chd_alias() {
 
     source __gen_dir_alias
-    source "$CUSTOM_CONSOLE_UTIL"/__println_as
+    source "$__CUSTOM_CONSOLE_UTIL"/__println_as
     source __print_chd_aliases
 
     local dir="$PWD"

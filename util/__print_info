@@ -4,7 +4,7 @@
 function __print_info() {
 
     #shellcheck disable=SC1091
-    source "$CUSTOM_CONSOLE_UTIL"/__println_as
+    source "$__CUSTOM_CONSOLE_UTIL"/__println_as
 
     __println_as blue "[INFO] $*"
 }

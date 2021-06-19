@@ -17,16 +17,16 @@ function chd() {
 
     local RESULT_ARR=()
 
-    source "$CUSTOM_CONSOLE_UTIL"/__gen_dir_alias
-    source "$CUSTOM_CONSOLE_UTIL"/__print_chd_aliases
-    source "$CUSTOM_CONSOLE_UTIL"/__print_as
-    source "$CUSTOM_CONSOLE_UTIL"/__add_chd_alias
-    source "$CUSTOM_CONSOLE_UTIL"/__get_last_modified_time
-    source "$CUSTOM_CONSOLE_UTIL"/__get_chd_list_item
-    source "$CUSTOM_CONSOLE_UTIL"/__url_encode
-    source "$CUSTOM_CONSOLE_UTIL"/__url_decode
-    source "$CUSTOM_CONSOLE_UTIL"/__split_str
-    source "$CUSTOM_CONSOLE_UTIL"/__escape_spaces
+    source "$__CUSTOM_CONSOLE_UTIL"/__gen_dir_alias
+    source "$__CUSTOM_CONSOLE_UTIL"/__print_chd_aliases
+    source "$__CUSTOM_CONSOLE_UTIL"/__print_as
+    source "$__CUSTOM_CONSOLE_UTIL"/__add_chd_alias
+    source "$__CUSTOM_CONSOLE_UTIL"/__get_last_modified_time
+    source "$__CUSTOM_CONSOLE_UTIL"/__get_chd_list_item
+    source "$__CUSTOM_CONSOLE_UTIL"/__url_encode
+    source "$__CUSTOM_CONSOLE_UTIL"/__url_decode
+    source "$__CUSTOM_CONSOLE_UTIL"/__split_str
+    source "$__CUSTOM_CONSOLE_UTIL"/__escape_spaces
 
     while true; do
 

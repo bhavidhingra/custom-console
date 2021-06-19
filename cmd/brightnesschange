@@ -6,7 +6,7 @@
 #shellcheck disable=SC2048
 #shellcheck disable=SC2086
 
-source "$CUSTOM_CONSOLE_UTIL"/__println_as
+source "$__CUSTOM_CONSOLE_UTIL"/__println_as
 
 BRIGHTNESS_INC_CODE="144"
 BRIGHTNESS_DEC_CODE="145"

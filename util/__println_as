@@ -5,7 +5,7 @@
 # Usage: __println_as "bold" "red" "Your Text"
 function __println_as() {
 
-    source "$CUSTOM_CONSOLE_UTIL"/__apply_tput
+    source "$__CUSTOM_CONSOLE_UTIL"/__apply_tput
 
     while [[ $# -gt 1 ]]; do
         __apply_tput "$1"

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #shellcheck disable=1091
-source "$CUSTOM_CONSOLE_UTIL"/__trim_escaped_quotes
+source "$__CUSTOM_CONSOLE_UTIL"/__trim_escaped_quotes
 
 # Usage: getrawstr "Input String"
 # Output: "Input\ String"
