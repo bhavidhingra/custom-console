@@ -3,12 +3,13 @@
 #shellcheck disable=SC2155
 #shellcheck disable=SC1091
 
-# Usage: __split_into_encoded_arr_by_arrow "${input_str}"
+# Usage: __split_str_into_raw_arr_by_arrow "${input_str}"
 # Output: RESULT_ARR
-function __split_into_encoded_arr_by_arrow() {
+function __split_str_into_raw_arr_by_arrow() {
 
     source "$CUSTOM_CONSOLE_UTIL"/__url_encode
     source "$CUSTOM_CONSOLE_UTIL"/__split_str
+    source "$CUSTOM_CONSOLE_UTIL"/__url_decode
 
     local str="${1}"
     local encodedStr="$(__url_encode "${str}")"
