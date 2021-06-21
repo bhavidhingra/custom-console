@@ -5,12 +5,12 @@
 #    HENCE, THE LAST LINE OF THIS FILE SHOULD BE A BLANK LINE
 
 alias checkoutservicesapis='cd /Users/bhavi.dhingra1/SF_Repos/checkout-services-apis'
-alias springcloudgateway='cd /Users/bhavi.dhingra1/custom-git/spring-cloud-gateway'
+alias springcloudgateway='cd /Users/bhavi.dhingra1/meta-custom-git/spring-cloud-gateway'
 alias customgitbash='cd /Users/bhavi.dhingra1/custom-git/custom-git-bash'
 alias customgit.github.io='cd /Users/bhavi.dhingra1/custom-git/custom-git.github.io'
 alias ods='cd /Users/bhavi.dhingra1/SF_Repos/ods'
 alias baseoms='cd /Users/bhavi.dhingra1/SF_Repos/base-oms'
-alias customconsole='cd /Users/bhavi.dhingra1/Own_Repos/custom-console'
+alias customconsolebash='cd /Users/bhavi.dhingra1/Own_Repos/custom-console-bash'
 alias nodepptdir='cd /Users/bhavi.dhingra1/Own_Repos/nodeppt'
 alias desktop='cd /Users/bhavi.dhingra1/Desktop'
 alias downloads='cd /Users/bhavi.dhingra1/Downloads'
