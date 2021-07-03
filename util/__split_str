@@ -7,12 +7,12 @@
 function __split_str() {
 	local str="${1}"
 	local delim="${2}"
-	local prefix=""
+	local suffix=""
 
 	RESULT_ARR=()
-	while [[ "${str}" != "${prefix}" ]]; do
-		prefix=${str%$delim*}			# remove suffix
-		str=${str#"$prefix$delim"}		# remove prefix
-		RESULT_ARR+=("$prefix")
+	while [[ "${str}" != "${suffix}" ]]; do
+		suffix=${str/*$delim/}			# remove prefix
+		str=${str%"$delim$suffix"}		# remove suffix
+		RESULT_ARR=("$suffix" "${RESULT_ARR[@]}")    # prepend to the result array
 	done
 }
