@@ -5,12 +5,12 @@
 # substr : delimiter substring
 # Output: RESULT_ARR
 function __split_str() {
+	local str="${1}"
 	local delim="${2}"
-	local str="${1}${delim}"
 	local prefix=""
 
 	RESULT_ARR=()
-	while [[ -n "${str}" ]]; do
+	while [[ "${str}" != "${prefix}" ]]; do
 		prefix=${str%$delim*}			# remove suffix
 		str=${str#"$prefix$delim"}		# remove prefix
 		RESULT_ARR+=("$prefix")
