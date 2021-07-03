@@ -1,24 +1,18 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-#shellcheck disable=SC1091
-#shellcheck disable=SC2155
-
-# Usage : __split_str str substr
+# Usage : __split_str "str" "substr"
 # str : input string
 # substr : delimiter substring
 # Output: RESULT_ARR
 function __split_str() {
+	local str="${1}"
+	local delim="${2}"
+	local suffix=""
 
-    local str="$1"
-    local subStr="$2"
-    str+=$subStr
-
-    RESULT_ARR=()
-    local remainingStr="$str"
-    while [[ -n "$remainingStr" ]]; do
-        local suffix=${remainingStr#*$subStr}
-        local prefix=${remainingStr%$subStr$suffix}
-        RESULT_ARR+=("$prefix")
-        remainingStr="$suffix"
-    done
+	RESULT_ARR=()
+	while [[ "${str}" != "${suffix}" ]]; do
+		suffix=${str/*$delim/}			# remove prefix
+		str=${str%"$delim$suffix"}		# remove suffix
+		RESULT_ARR=("$suffix" "${RESULT_ARR[@]}")    # prepend to the result array
+	done
 }
